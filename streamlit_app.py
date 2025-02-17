@@ -31,7 +31,7 @@ Sandeep Anumula
 """
 
 # PDF file (replace with your actual PDF path)
-pdf_path = "/workspaces/my-first-streamlit-app/your_resume.pdf"
+pdf_path = "your_resume.pdf"
 
 # HTML resume (optional)
 html_resume = """
