@@ -1,27 +1,32 @@
 import streamlit as st
+import base64
 
-def display_pdf(file_path):
-    # Provide a download button
-    with open(file_path, "rb") as file:
-        resume_bytes = file.read()
-        st.download_button(label="Download Resume", 
-                           data=resume_bytes, 
-                           file_name="My_Resume.pdf", 
-                           mime="application/pdf")
-
-    # Embed PDF directly using HTML
-    st.write("### Resume Preview:")
+def get_pdf_download_link(pdf_path):
+    """Creates a link to download the PDF file"""
+    with open(pdf_path, "rb") as pdf_file:
+        base64_pdf = base64.b64encode(pdf_file.read()).decode("utf-8")
+    
     pdf_display = f"""
-    <embed src="data:application/pdf;base64,{resume_bytes.decode('latin1')}" 
-           width="700" height="900" type="application/pdf">
+    <embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="900" type="application/pdf">
     """
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    return pdf_display
 
 def main():
     st.title("My Resume Viewer")
     
+    pdf_path = "your_resume.pdf"  # Ensure this file exists in the same directory
+
     if st.button("Show My Resume"):
-        display_pdf("your_resume.pdf")
+        # Provide a Download Button
+        with open(pdf_path, "rb") as pdf_file:
+            resume_bytes = pdf_file.read()
+            st.download_button(label="Download Resume", 
+                               data=resume_bytes, 
+                               file_name="My_Resume.pdf", 
+                               mime="application/pdf")
+
+        # Display PDF preview
+        st.markdown(get_pdf_download_link(pdf_path), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
