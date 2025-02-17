@@ -12,7 +12,8 @@ def main():
                                file_name="My_Resume.pdf", 
                                mime="application/pdf")
             st.write("### Resume Preview:")
-            st.pdf("your_resume.pdf")
+            pdf_display = f'<iframe src="your_resume.pdf" width="700" height="900"></iframe>'
+            st.markdown(pdf_display, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
